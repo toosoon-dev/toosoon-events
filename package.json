@@ -1,6 +1,6 @@
 {
   "name": "toosoon-events",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Event services",
   "main": "./lib/index.js",
   "scripts": {

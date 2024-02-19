@@ -18,6 +18,8 @@ $ npm install toosoon-events
 
 ## Usage
 
+Bind and unbind service:
+
 ```ts
 import { resize } from 'toosoon-events';
 
@@ -28,23 +30,22 @@ function onResize(width: number, height: number) {
 const off = resize.on(onResize);
 
 function dispose() {
+  // Every service has an `off` method so you can also just call: `resize.off(onResize);`
   off();
 }
 ```
 
-```ts
-import { resize } from 'toosoon-events';
+## Services
 
-function onResize(width: number, height: number) {
-  // ...
-}
+`keyboard`
 
-resize.on(onResize);
+`pointer`
 
-function dispose() {
-  resize.off(onResize);
-}
-```
+`raf`
+
+`resize`
+
+`scroll`
 
 ## License
 
