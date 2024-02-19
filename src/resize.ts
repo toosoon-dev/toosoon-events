@@ -1,4 +1,4 @@
-export type ResizeListener = (event?: Event | UIEvent) => void;
+export type ResizeListener = (width: number, height: number) => void;
 
 let timeout: number;
 
@@ -23,14 +23,13 @@ class ResizeService {
     }
   };
 
-  onResize = (event: Event | UIEvent) => {
+  onResize = () => {
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
-      this.listeners.forEach((listener) => listener(event));
-      timeout = setTimeout(() => {
-        this.listeners.forEach((listener) => listener(event));
-      }, 500);
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      this.listeners.forEach((listener) => listener(width, height));
     }, this.debounceTime);
   };
 }
