@@ -19,7 +19,9 @@ $ npm install toosoon-events
 ## Usage
 
 ```ts
-import { keyboard, KeyboardEventKey, pointer, Pointer, PointerEventKey, raf, resize, scroll } from 'toosoon-events';
+import { keyboard, pointer, raf, resize, pointer, scroll } from 'toosoon-events';
+import type { KeyboardEventKey } from 'toosoon-events/keyboard';
+import type { Pointer, PointerEventKey } from 'toosoon-events/pointer';
 
 function onKeyDown(event: KeyboardEvent) {
   // ...

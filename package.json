@@ -1,8 +1,15 @@
 {
   "name": "toosoon-events",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Event services",
   "main": "./lib/index.js",
+  "exports": {
+    "./keyboard": "./lib/keyboard.js",
+    "./pointer": "./lib/pointer.js",
+    "./raf": "./lib/raf.js",
+    "./resize": "./lib/resize.js",
+    "./scroll": "./lib/scroll.js"
+  },
   "scripts": {
     "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +21,12 @@
   "keywords": [
     "toosoon",
     "events",
-    "services"
+    "services",
+    "keyboard",
+    "pointer",
+    "raf",
+    "resize",
+    "scroll"
   ],
   "author": "Arnaud Rocca",
   "license": "MIT",
