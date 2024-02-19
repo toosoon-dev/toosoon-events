@@ -18,20 +18,41 @@ $ npm install toosoon-events
 
 ## Usage
 
-Bind and unbind service:
-
 ```ts
-import { resize } from 'toosoon-events';
+import { keyboard, KeyboardEventKey, pointer, Pointer, PointerEventKey, raf, resize, scroll } from 'toosoon-events';
+
+function onKeyDown(event: KeyboardEvent) {
+  // ...
+}
+
+function onPointerStart(pointers: Pointers[]) {
+  // ...
+}
+
+function onUpdate(time: number, delta: number) {
+  // ...
+}
 
 function onResize(width: number, height: number) {
   // ...
 }
 
-const off = resize.on(onResize);
+function onScroll(event: Event) {
+  // ...
+}
+
+keyboard.on(KeyboardEventKey.Down, onKeyDown);
+pointer.on(PointerEventKey.Start, onPointerStart);
+raf.on(onUpdate);
+resize.on(onResize);
+scroll.on(onScroll);
 
 function dispose() {
-  // Every service has an `off` method so you can also just call: `resize.off(onResize);`
-  off();
+  keyboard.off(KeyboardEventKey.Down, onKeyDown);
+  pointer.off(PointerEventKey.Start, onPointerStart);
+  raf.off(onUpdate);
+  resize.off(onResize);
+  scroll.off(onScroll);
 }
 ```
 
