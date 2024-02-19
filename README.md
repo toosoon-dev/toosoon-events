@@ -2,6 +2,10 @@
 
 TOOSOON event services.
 
+A service is a class designed with a specific and clearly defined objective.
+
+In this project, services are implemented as singleton class instances. They abstract and prevent the process of managing multiple event listeners for common browser events. Using services is recommended for events that are likely to be listened to by many components.
+
 ## Installation
 
 Yarn:
@@ -19,9 +23,9 @@ $ npm install toosoon-events
 ## Usage
 
 ```ts
-import { keyboard, pointer, raf, resize, pointer, scroll } from 'toosoon-events';
-import type { KeyboardEventKey } from 'toosoon-events/keyboard';
-import type { Pointer, PointerEventKey } from 'toosoon-events/pointer';
+import { raf, resize, pointer, scroll } from 'toosoon-events';
+import keyboard, { KeyboardEventKey } from 'toosoon-events/keyboard';
+import pointer, { Pointer, PointerEventKey } from 'toosoon-events/pointer';
 
 function onKeyDown(event: KeyboardEvent) {
   // ...
