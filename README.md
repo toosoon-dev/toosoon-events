@@ -1,8 +1,6 @@
 # TOOSOON EVENTS
 
-TOOSOON event services.
-
-In this project, services are implemented as singleton class instances. They abstract and prevent the process of creating multiple event listeners for common browser events. These services are particularly useful for managing events that are likely to be listened to by many components.
+Project providing services implemented as singleton class instances. They abstract and prevent the process of creating multiple event listeners for common browser events. These services are particularly useful for managing events that are likely to be listened to by many components.
 
 ## Installation
 
