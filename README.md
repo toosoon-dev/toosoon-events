@@ -19,16 +19,16 @@ $ npm install toosoon-events
 ## Usage
 
 ```ts
-import pointer, { Pointer, PointerEventKey } from 'toosoon-events/pointer';
+import pointer, { Pointer } from 'toosoon-events/pointer';
 
 function onPointerStart(pointers: Pointers[]) {
   // ...
 }
 
-pointer.on(PointerEventKey.Start, onPointerStart);
+pointer.on('start', onPointerStart);
 
 function dispose() {
-  pointer.off(PointerEventKey.Start, onPointerStart);
+  pointer.off('start', onPointerStart);
 }
 ```
 
