@@ -1,8 +1,8 @@
-export { default as keyboard, KeyboardEventKey } from './keyboard';
-export type { KeyboardListener } from './keyboard';
+export { default as keyboard } from './keyboard';
+export type { KeyboardEventKey, KeyboardListener } from './keyboard';
 
-export { default as pointer, PointerEventKey } from './pointer';
-export type { PointerListener } from './pointer';
+export { default as pointer } from './pointer';
+export type { Pointer, PointerEventKey, PointerListener } from './pointer';
 
 export { default as raf } from './raf';
 export type { RafListener } from './raf';

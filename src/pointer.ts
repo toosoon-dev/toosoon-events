@@ -7,17 +7,13 @@ export interface Pointer {
 
 export type PointerListener = (pointers: Pointer[]) => void;
 
-export enum PointerEventKey {
-  Start = 'pointerstart',
-  End = 'pointerend',
-  Move = 'pointermove'
-}
+export type PointerEventKey = 'start' | 'end' | 'move';
 
 class PointerService {
   listeners: { [eventKey in PointerEventKey]: PointerListener[] } = {
-    [PointerEventKey.Start]: [],
-    [PointerEventKey.End]: [],
-    [PointerEventKey.Move]: []
+    start: [],
+    end: [],
+    move: []
   };
 
   pointers: Pointer[] = [];
@@ -26,17 +22,17 @@ class PointerService {
   on = (eventKey: PointerEventKey, listener: PointerListener): (() => void) => {
     if (!this.listeners[eventKey].length) {
       switch (eventKey) {
-        case PointerEventKey.Start: {
+        case 'start': {
           window.addEventListener('mousedown', this.onPointerStart);
           window.addEventListener('touchstart', this.onPointerStart);
           break;
         }
-        case PointerEventKey.End: {
+        case 'end': {
           window.addEventListener('mouseup', this.onPointerStart);
           window.addEventListener('touchend', this.onPointerStart);
           break;
         }
-        case PointerEventKey.Move: {
+        case 'move': {
           window.addEventListener('mousemove', this.onPointerMove);
           window.addEventListener('touchmove', this.onPointerMove);
           break;
@@ -53,17 +49,17 @@ class PointerService {
     this.listeners[eventKey] = this.listeners[eventKey].filter((_listener) => _listener !== listener);
     if (!this.listeners[eventKey].length) {
       switch (eventKey) {
-        case PointerEventKey.Start: {
+        case 'start': {
           window.removeEventListener('mousedown', this.onPointerStart);
           window.removeEventListener('touchstart', this.onPointerStart);
           break;
         }
-        case PointerEventKey.End: {
+        case 'end': {
           window.removeEventListener('mouseup', this.onPointerStart);
           window.removeEventListener('touchend', this.onPointerStart);
           break;
         }
-        case PointerEventKey.Move: {
+        case 'move': {
           window.removeEventListener('mousemove', this.onPointerMove);
           window.removeEventListener('touchmove', this.onPointerMove);
           break;
@@ -99,18 +95,18 @@ class PointerService {
   onPointerStart = (event: MouseEvent | TouchEvent) => {
     this.isDown = true;
     this.setPointers(event);
-    this.listeners[PointerEventKey.Start].forEach((listener) => listener(this.pointers));
+    this.listeners['start'].forEach((listener) => listener(this.pointers));
   };
 
   onPointerEnd = (event: MouseEvent | TouchEvent) => {
     this.isDown = false;
     this.setPointers(event);
-    this.listeners[PointerEventKey.End].forEach((listener) => listener(this.pointers));
+    this.listeners['end'].forEach((listener) => listener(this.pointers));
   };
 
   onPointerMove = (event: MouseEvent | TouchEvent) => {
     this.setPointers(event);
-    this.listeners[PointerEventKey.Move].forEach((listener) => listener(this.pointers));
+    this.listeners['move'].forEach((listener) => listener(this.pointers));
   };
 }
 

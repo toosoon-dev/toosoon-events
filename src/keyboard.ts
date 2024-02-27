@@ -1,23 +1,20 @@
 export type KeyboardListener = (event: KeyboardEvent) => void;
 
-export enum KeyboardEventKey {
-  Down = 'keydown',
-  Up = 'keyup'
-}
+export type KeyboardEventKey = 'down' | 'up';
 
 class KeyboardService {
   listeners: { [eventKey in KeyboardEventKey]: KeyboardListener[] } = {
-    [KeyboardEventKey.Down]: [],
-    [KeyboardEventKey.Up]: []
+    down: [],
+    up: []
   };
 
   on = (eventKey: KeyboardEventKey, listener: KeyboardListener): (() => void) => {
     if (!this.listeners[eventKey].length) {
       switch (eventKey) {
-        case KeyboardEventKey.Down:
+        case 'down':
           window.addEventListener('keydown', this.onKeyDown);
           break;
-        case KeyboardEventKey.Up:
+        case 'up':
           window.addEventListener('keyup', this.onKeyUp);
           break;
         default:
@@ -32,10 +29,10 @@ class KeyboardService {
     this.listeners[eventKey] = this.listeners[eventKey].filter((_listener) => _listener !== listener);
     if (!this.listeners[eventKey].length) {
       switch (eventKey) {
-        case KeyboardEventKey.Down:
+        case 'down':
           window.removeEventListener('keydown', this.onKeyDown);
           break;
-        case KeyboardEventKey.Up:
+        case 'up':
           window.removeEventListener('keyup', this.onKeyUp);
           break;
         default:
@@ -45,11 +42,11 @@ class KeyboardService {
   };
 
   onKeyDown = (event: KeyboardEvent) => {
-    this.listeners[KeyboardEventKey.Down].forEach((listener) => listener(event));
+    this.listeners['down'].forEach((listener) => listener(event));
   };
 
   onKeyUp = (event: KeyboardEvent) => {
-    this.listeners[KeyboardEventKey.Up].forEach((listener) => listener(event));
+    this.listeners['up'].forEach((listener) => listener(event));
   };
 }
 
