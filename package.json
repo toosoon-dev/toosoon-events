@@ -1,7 +1,7 @@
 {
   "name": "toosoon-events",
   "version": "1.2.0",
-  "description": "Event services",
+  "description": "Project providing services implemented as singleton class instances",
   "main": "./lib/index.js",
   "exports": {
     "./keyboard": "./lib/keyboard.js",
