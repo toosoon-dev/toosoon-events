@@ -5,12 +5,12 @@ export interface Pointer {
   normalY: number;
 }
 
-export type PointerListener = (pointers: Pointer[]) => void;
-
 export type PointerEventKey = 'start' | 'end' | 'move';
 
+export type PointerListener = (pointers: Pointer[]) => void;
+
 class PointerService {
-  listeners: { [eventKey in PointerEventKey]: PointerListener[] } = {
+  listeners: Record<PointerEventKey, PointerListener[]> = {
     start: [],
     end: [],
     move: []

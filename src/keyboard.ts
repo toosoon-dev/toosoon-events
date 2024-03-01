@@ -1,9 +1,9 @@
-export type KeyboardListener = (event: KeyboardEvent) => void;
-
 export type KeyboardEventKey = 'down' | 'up';
 
+export type KeyboardListener = (event: KeyboardEvent) => void;
+
 class KeyboardService {
-  listeners: { [eventKey in KeyboardEventKey]: KeyboardListener[] } = {
+  listeners: Record<KeyboardEventKey, KeyboardListener[]> = {
     down: [],
     up: []
   };
