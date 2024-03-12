@@ -1,6 +1,6 @@
 {
   "name": "toosoon-events",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Project providing services implemented as singleton class instances",
   "type": "module",
   "engines": {
@@ -39,7 +39,7 @@
     "url": "https://github.com/toosoon-dev/toosoon-events/issues"
   },
   "homepage": "https://github.com/toosoon-dev/toosoon-events#readme",
-  "peerDependencies": {
-    "typescript": "5.x"
+  "devDependencies": {
+    "typescript": "^5.4.2"
   }
 }
