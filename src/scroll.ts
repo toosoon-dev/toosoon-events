@@ -1,28 +1,21 @@
+import { EventManager } from './abstracts';
+
 export type ScrollListener = (event?: Event) => void;
 
-class ScrollService {
-  listeners: ScrollListener[] = [];
+class ScrollManager extends EventManager<ScrollListener> {
+  protected listeners: ScrollListener[] = [];
 
-  on = (listener: ScrollListener): (() => void) => {
-    if (!this.listeners.length) {
-      window.addEventListener('scroll', this.onScroll, { passive: false });
-    }
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
-    return () => this.off(listener);
-  };
+  protected bind() {
+    window.addEventListener('scroll', this._onScroll);
+  }
 
-  off = (listener: ScrollListener) => {
-    this.listeners = this.listeners.filter((_listener) => _listener !== listener);
-    if (!this.listeners.length) {
-      window.removeEventListener('scroll', this.onScroll);
-    }
-  };
+  protected unbind() {
+    window.removeEventListener('scroll', this._onScroll);
+  }
 
-  onScroll = (event: Event) => {
+  private _onScroll = (event: Event) => {
     this.listeners.forEach((listener) => listener(event));
   };
 }
 
-const scroll = new ScrollService();
-
-export default scroll;
+export default new ScrollManager();

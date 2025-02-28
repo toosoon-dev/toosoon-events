@@ -1,37 +1,35 @@
+import { EventManager } from './abstracts';
+
 export type RafListener = (time: number, delta: number) => void;
 
-class RafService {
-  listeners: RafListener[] = [];
-  time = 0;
-  frameId = 0;
+class RafManager extends EventManager<RafListener> {
+  public time = 0;
 
-  on = (listener: RafListener): (() => void) => {
-    if (!this.frameId) {
-      this.time = Date.now();
-      this.frameId = requestAnimationFrame(this.update);
-    }
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
-    return () => this.off(listener);
-  };
+  private _rafId!: number;
 
-  off = (listener: RafListener): void => {
-    this.listeners = this.listeners.filter((_listener) => _listener !== listener);
-    if (!this.listeners.length) {
-      cancelAnimationFrame(this.frameId);
-      this.frameId = 0;
-    }
-  };
+  protected listeners: RafListener[] = [];
 
-  update = () => {
+  protected bind() {
+    this.time = Date.now();
+    this._rafId = requestAnimationFrame(this._onUpdate);
+  }
+
+  protected unbind() {
+    cancelAnimationFrame(this._rafId);
+    this._rafId = 0;
+  }
+
+  public update() {
     const time = Date.now();
     const delta = (time - this.time) / 1000;
     this.time = time;
-
     this.listeners.forEach((listener) => listener(time, delta));
-    this.frameId = requestAnimationFrame(this.update);
+  }
+
+  private _onUpdate = () => {
+    this.update();
+    this._rafId = requestAnimationFrame(this._onUpdate);
   };
 }
 
-const raf = new RafService();
-
-export default raf;
+export default new RafManager();

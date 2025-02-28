@@ -1,39 +1,44 @@
+import { EventManager } from './abstracts';
+
 export type ResizeListener = (width: number, height: number) => void;
 
-let timeout: number;
+class ResizeManager extends EventManager<ResizeListener> {
+  public width: number = 0;
+  public height: number = 0;
 
-class ResizeService {
-  debounceTime = 10; // in ms
-  listeners: ResizeListener[] = [];
+  private _debounceDelay: number = 10; // in ms
+  private _timeout!: ReturnType<typeof setTimeout>;
 
-  on = (listener: ResizeListener): (() => void) => {
-    if (!this.listeners.length) {
-      window.addEventListener('resize', this.onResize);
-      window.addEventListener('orientationchange', this.onResize);
-    }
-    if (!this.listeners.includes(listener)) this.listeners.push(listener);
-    return () => this.off(listener);
+  protected listeners: ResizeListener[] = [];
+
+  protected bind() {
+    window.addEventListener('resize', this._onResize);
+    window.addEventListener('orientationchange', this._onResize);
+  }
+
+  protected unbind() {
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('orientationchange', this._onResize);
+  }
+
+  public resize() {
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.listeners.forEach((listener) => listener(this.width, this.height));
+  }
+
+  private _onResize = () => {
+    clearTimeout(this._timeout);
+    this._timeout = setTimeout(() => this.resize, this._debounceDelay);
   };
 
-  off = (listener: ResizeListener): void => {
-    this.listeners = this.listeners.filter((_listener) => _listener !== listener);
-    if (!this.listeners.length) {
-      window.removeEventListener('resize', this.onResize);
-      window.removeEventListener('orientationchange', this.onResize);
-    }
-  };
+  get debounceDelay() {
+    return this._debounceDelay;
+  }
 
-  onResize = () => {
-    clearTimeout(timeout);
-
-    timeout = setTimeout(() => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      this.listeners.forEach((listener) => listener(width, height));
-    }, this.debounceTime);
-  };
+  set debounceDelay(delay: number) {
+    this._debounceDelay = delay;
+  }
 }
 
-const resize = new ResizeService();
-
-export default resize;
+export default new ResizeManager();

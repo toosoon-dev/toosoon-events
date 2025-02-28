@@ -1,6 +1,6 @@
 # TOOSOON EVENTS
 
-Project providing services implemented as singleton class instances. They abstract and prevent the process of creating multiple event listeners for common browser events. These services are particularly useful for managing events that are likely to be listened to by many components.
+Project providing managers implemented as singleton class instances. They abstract and prevent the process of creating multiple event listeners for common browser events. These managers are particularly useful for managing events that are likely to be listened to by many components.
 
 ## Installation
 
@@ -19,30 +19,30 @@ $ npm install toosoon-events
 ## Usage
 
 ```ts
-import pointer, { Pointer } from 'toosoon-events/pointer';
+import PointerManager, { Pointer } from 'toosoon-events/pointer';
 
 function onPointerStart(pointers: Pointers[]) {
   // ...
 }
 
-pointer.on('start', onPointerStart);
+PointerManager.on('start', onPointerStart);
 
 function dispose() {
-  pointer.off('start', onPointerStart);
+  PointerManager.off('start', onPointerStart);
 }
 ```
 
-## Services
+## Managers
 
-`keyboard`
+`KeyboardManager`
 
-`pointer`
+`PointerManager`
 
-`raf`
+`RafManager`
 
-`resize`
+`ResizeManager`
 
-`scroll`
+`ScrollManager`
 
 ## License
 

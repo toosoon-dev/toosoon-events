@@ -1,55 +1,48 @@
+import { EventsManager } from './abstracts';
+
 export type KeyboardEventKey = 'down' | 'up';
 
 export type KeyboardListener = (event: KeyboardEvent) => void;
 
-class KeyboardService {
-  listeners: Record<KeyboardEventKey, KeyboardListener[]> = {
+class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> {
+  protected listeners: Record<KeyboardEventKey, KeyboardListener[]> = {
     down: [],
     up: []
   };
 
-  on = (eventKey: KeyboardEventKey, listener: KeyboardListener): (() => void) => {
-    if (!this.listeners[eventKey].length) {
-      switch (eventKey) {
-        case 'down':
-          window.addEventListener('keydown', this.onKeyDown);
-          break;
-        case 'up':
-          window.addEventListener('keyup', this.onKeyUp);
-          break;
-        default:
-          break;
-      }
+  protected bind(eventKey: KeyboardEventKey) {
+    switch (eventKey) {
+      case 'down':
+        window.addEventListener('keydown', this._onKeyDown);
+        break;
+      case 'up':
+        window.addEventListener('keyup', this._onKeyUp);
+        break;
+      default:
+        break;
     }
-    if (!this.listeners[eventKey].includes(listener)) this.listeners[eventKey].push(listener);
-    return () => this.off(eventKey, listener);
-  };
+  }
 
-  off = (eventKey: KeyboardEventKey, listener: KeyboardListener): void => {
-    this.listeners[eventKey] = this.listeners[eventKey].filter((_listener) => _listener !== listener);
-    if (!this.listeners[eventKey].length) {
-      switch (eventKey) {
-        case 'down':
-          window.removeEventListener('keydown', this.onKeyDown);
-          break;
-        case 'up':
-          window.removeEventListener('keyup', this.onKeyUp);
-          break;
-        default:
-          break;
-      }
+  protected unbind(eventKey: KeyboardEventKey) {
+    switch (eventKey) {
+      case 'down':
+        window.removeEventListener('keydown', this._onKeyDown);
+        break;
+      case 'up':
+        window.removeEventListener('keyup', this._onKeyUp);
+        break;
+      default:
+        break;
     }
-  };
+  }
 
-  onKeyDown = (event: KeyboardEvent) => {
+  private _onKeyDown = (event: KeyboardEvent) => {
     this.listeners['down'].forEach((listener) => listener(event));
   };
 
-  onKeyUp = (event: KeyboardEvent) => {
+  private _onKeyUp = (event: KeyboardEvent) => {
     this.listeners['up'].forEach((listener) => listener(event));
   };
 }
 
-const keyboard = new KeyboardService();
-
-export default keyboard;
+export default new KeyboardManager();
