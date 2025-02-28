@@ -1,6 +1,6 @@
 {
   "name": "toosoon-events",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Project providing services implemented as singleton class instances",
   "engines": {
     "node": ">=16"
@@ -8,6 +8,7 @@
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "exports": {
+    ".": "./lib/index.js",
     "./keyboard": "./lib/keyboard.js",
     "./pointer": "./lib/pointer.js",
     "./raf": "./lib/raf.js",

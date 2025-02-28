@@ -1,4 +1,4 @@
-import { EventManager } from './abstracts';
+import { EventManager } from './index';
 
 export type RafListener = (time: number, delta: number) => void;
 

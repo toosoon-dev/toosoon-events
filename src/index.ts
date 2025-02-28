@@ -1,16 +1,37 @@
-export { EventManager, EventsManager } from './abstracts';
+export abstract class EventManager<EventListener extends Function> {
+  protected abstract listeners: EventListener[];
 
-export { default as KeyboardManager } from './keyboard';
-export type { KeyboardEventKey, KeyboardListener } from './keyboard';
+  public on(listener: EventListener): () => void {
+    if (!this.listeners.length) this.bind();
+    if (!this.listeners.includes(listener)) this.listeners.push(listener);
+    return () => this.off(listener);
+  }
 
-export { default as PointerManager } from './pointer';
-export type { Pointer, PointerEventKey, PointerListener } from './pointer';
+  public off(listener: EventListener): void {
+    this.listeners = this.listeners.filter((_listener) => _listener !== listener);
+    if (!this.listeners.length) this.unbind();
+  }
 
-export { default as RafManager } from './raf';
-export type { RafListener } from './raf';
+  protected abstract bind(): void;
 
-export { default as ResizeManager } from './resize';
-export type { ResizeListener } from './resize';
+  protected abstract unbind(): void;
+}
 
-export { default as ScrollManager } from './scroll';
-export type { ScrollListener } from './scroll';
+export abstract class EventsManager<EventKey extends string, EventListener extends Function> {
+  protected abstract listeners: Record<EventKey, EventListener[]>;
+
+  public on(eventKey: EventKey, listener: EventListener): () => void {
+    if (!this.listeners[eventKey].length) this.bind(eventKey);
+    if (!this.listeners[eventKey].includes(listener)) this.listeners[eventKey].push(listener);
+    return () => this.off(eventKey, listener);
+  }
+
+  public off(eventKey: EventKey, listener: EventListener): void {
+    this.listeners[eventKey] = this.listeners[eventKey].filter((_listener) => _listener !== listener);
+    if (!this.listeners[eventKey].length) this.unbind(eventKey);
+  }
+
+  protected abstract bind(eventKey: EventKey): void;
+
+  protected abstract unbind(eventKey: EventKey): void;
+}

@@ -1,4 +1,4 @@
-import { EventsManager } from './abstracts';
+import { EventsManager } from './index';
 
 export type KeyboardEventKey = 'down' | 'up';
 
