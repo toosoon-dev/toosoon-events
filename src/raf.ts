@@ -19,12 +19,12 @@ class RafManager extends EventManager<RafListener> {
     this._rafId = 0;
   }
 
-  public update() {
+  public update = () => {
     const time = Date.now();
     const delta = (time - this.time) / 1000;
     this.time = time;
     this.listeners.forEach((listener) => listener(time, delta));
-  }
+  };
 
   private _onUpdate = () => {
     this.update();

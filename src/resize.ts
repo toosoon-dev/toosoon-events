@@ -21,15 +21,15 @@ class ResizeManager extends EventManager<ResizeListener> {
     window.removeEventListener('orientationchange', this._onResize);
   }
 
-  public resize() {
+  public resize = () => {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.listeners.forEach((listener) => listener(this.width, this.height));
-  }
+  };
 
   private _onResize = () => {
     clearTimeout(this._timeout);
-    this._timeout = setTimeout(() => this.resize, this._debounceDelay);
+    this._timeout = setTimeout(this.resize, this._debounceDelay);
   };
 
   get debounceDelay() {
