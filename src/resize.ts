@@ -2,14 +2,20 @@ import { EventManager } from './index';
 
 export type ResizeListener = (width: number, height: number) => void;
 
+/**
+ * Utility class for creating resize event listeners
+ *
+ * @class ResizeManager
+ * @extends EventManager
+ */
 class ResizeManager extends EventManager<ResizeListener> {
+  protected listeners: ResizeListener[] = [];
+
   public width: number = 0;
   public height: number = 0;
 
   private _debounceDelay: number = 10; // in ms
   private _timeout!: ReturnType<typeof setTimeout>;
-
-  protected listeners: ResizeListener[] = [];
 
   protected bind() {
     window.addEventListener('resize', this._onResize);

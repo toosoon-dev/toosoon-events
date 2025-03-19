@@ -2,6 +2,12 @@ import { EventManager } from './index';
 
 export type ScrollListener = (event?: Event) => void;
 
+/**
+ * Utility class for creating scroll event listeners
+ *
+ * @class ScrollManager
+ * @extends EventManager
+ */
 class ScrollManager extends EventManager<ScrollListener> {
   protected listeners: ScrollListener[] = [];
 

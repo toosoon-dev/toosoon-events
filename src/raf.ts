@@ -2,12 +2,18 @@ import { EventManager } from './index';
 
 export type RafListener = (time: number, delta: number) => void;
 
+/**
+ * Utility class for creating `requestAnimationFrame` listeners
+ *
+ * @class RafManager
+ * @extends EventManager
+ */
 class RafManager extends EventManager<RafListener> {
+  protected listeners: RafListener[] = [];
+
   public time = 0;
 
   private _rafId!: number;
-
-  protected listeners: RafListener[] = [];
 
   protected bind() {
     this.time = Date.now();

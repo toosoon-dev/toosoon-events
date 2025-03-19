@@ -9,14 +9,20 @@ export type PointerEventKey = 'start' | 'end' | 'move';
 
 export type PointerListener = (pointers: Pointer[]) => void;
 
+/**
+ * Utility class for creating mouse/touch events listeners
+ *
+ * @class PointerManager
+ * @extends EventsManager
+ */
 class PointerManager extends EventsManager<PointerEventKey, PointerListener> {
-  private _pointers: Pointer[] = [];
-
   protected listeners: Record<PointerEventKey, PointerListener[]> = {
     start: [],
     end: [],
     move: []
   };
+
+  private _pointers: Pointer[] = [];
 
   protected bind(eventKey: PointerEventKey) {
     switch (eventKey) {

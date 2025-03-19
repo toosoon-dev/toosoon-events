@@ -4,6 +4,12 @@ export type KeyboardEventKey = 'down' | 'up' | 'press';
 
 export type KeyboardListener = (event: KeyboardEvent) => void;
 
+/**
+ * Utility class for creating keyboard events listeners
+ *
+ * @class KeyboardManager
+ * @extends EventsManager
+ */
 class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> {
   protected listeners: Record<KeyboardEventKey, KeyboardListener[]> = {
     down: [],
