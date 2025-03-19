@@ -1,13 +1,14 @@
 import { EventsManager } from './index';
 
-export type KeyboardEventKey = 'down' | 'up';
+export type KeyboardEventKey = 'down' | 'up' | 'press';
 
 export type KeyboardListener = (event: KeyboardEvent) => void;
 
 class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> {
   protected listeners: Record<KeyboardEventKey, KeyboardListener[]> = {
     down: [],
-    up: []
+    up: [],
+    press: []
   };
 
   protected bind(eventKey: KeyboardEventKey) {
@@ -17,6 +18,9 @@ class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> 
         break;
       case 'up':
         window.addEventListener('keyup', this._onKeyUp);
+        break;
+      case 'press':
+        window.addEventListener('keypress', this._onKeyPress);
         break;
       default:
         break;
@@ -31,6 +35,9 @@ class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> 
       case 'up':
         window.removeEventListener('keyup', this._onKeyUp);
         break;
+      case 'press':
+        window.removeEventListener('keypress', this._onKeyPress);
+        break;
       default:
         break;
     }
@@ -42,6 +49,10 @@ class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> 
 
   private _onKeyUp = (event: KeyboardEvent) => {
     this.listeners['up'].forEach((listener) => listener(event));
+  };
+
+  private _onKeyPress = (event: KeyboardEvent) => {
+    this.listeners['press'].forEach((listener) => listener(event));
   };
 }
 
