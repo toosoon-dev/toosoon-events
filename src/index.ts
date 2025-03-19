@@ -1,5 +1,5 @@
 /**
- * Utility class for creating multiple event listeners
+ * Utility abstract class for creating multiple event listeners
  *
  * @exports
  * @class EventManager
@@ -40,7 +40,7 @@ export abstract class EventManager<EventListener extends Function> {
 }
 
 /**
- * Utility class for creating multiple events listeners
+ * Utility abstract class for creating multiple events listeners
  *
  * @exports
  * @class EventsManager
