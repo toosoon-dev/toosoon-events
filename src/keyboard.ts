@@ -28,8 +28,6 @@ class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> 
       case 'press':
         window.addEventListener('keypress', this._onKeyPress);
         break;
-      default:
-        break;
     }
   }
 
@@ -43,8 +41,6 @@ class KeyboardManager extends EventsManager<KeyboardEventKey, KeyboardListener> 
         break;
       case 'press':
         window.removeEventListener('keypress', this._onKeyPress);
-        break;
-      default:
         break;
     }
   }

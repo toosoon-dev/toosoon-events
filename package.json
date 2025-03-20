@@ -1,7 +1,8 @@
 {
   "name": "toosoon-events",
-  "version": "4.0.4",
+  "version": "4.1.0",
   "description": "Project providing services implemented as singleton class instances",
+  "type": "module",
   "engines": {
     "node": ">=16"
   },

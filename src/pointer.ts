@@ -38,8 +38,6 @@ class PointerManager extends EventsManager<PointerEventKey, PointerListener> {
         window.addEventListener('mousemove', this._onPointerMove);
         window.addEventListener('touchmove', this._onPointerMove);
         break;
-      default:
-        break;
     }
   }
 
@@ -56,8 +54,6 @@ class PointerManager extends EventsManager<PointerEventKey, PointerListener> {
       case 'move':
         window.removeEventListener('mousemove', this._onPointerMove);
         window.removeEventListener('touchmove', this._onPointerMove);
-        break;
-      default:
         break;
     }
   }
