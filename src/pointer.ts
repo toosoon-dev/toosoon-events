@@ -1,9 +1,9 @@
 import { EventsManager } from './index';
 
-export interface Pointer {
+export type Pointer = {
   x: number;
   y: number;
-}
+};
 
 export type PointerEventKey = 'start' | 'end' | 'move';
 
